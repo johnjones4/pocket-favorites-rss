@@ -20,10 +20,10 @@ app.get('/',function(req,res,next) {
       'consumer_key': config.pocket.consumerKey,
       'access_token': accessToken
     });
-    const params = {
+    const params1 = {
       'favorite': 1
     }
-    pocket.get(params,function(err,resp) {
+    pocket.get(params1,function(err,resp) {
       if (err) {
         next(err);
       } else if (resp && resp.list) {
@@ -45,10 +45,10 @@ app.get('/',function(req,res,next) {
       }
     });
   } else {
-    var params = {
+    const params2 = {
       'redirect_uri': redirect
     };
-    pocket.getRequestToken(params, function(err, resp, body) {
+    pocket.getRequestToken(params2, function(err, resp, body) {
       if (err) {
         next(err);
       } else {
@@ -67,10 +67,10 @@ app.get('/',function(req,res,next) {
 
 app.get('/callback',function(req,res,next) {
   if (requestToken) {
-    var params = {
+    const params3 = {
       'request_token': requestToken
     };
-    pocket.getAccessToken(params, function(err, resp, body) {
+    pocket.getAccessToken(params3, function(err, resp, body) {
       if (err) {
         next(err);
       } else {
