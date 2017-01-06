@@ -1,0 +1,24 @@
+{
+  "name": "pocket-favorites-rss",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnjones4/pocket-favorites-rss.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/johnjones4/pocket-favorites-rss/issues"
+  },
+  "homepage": "https://github.com/johnjones4/pocket-favorites-rss#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "node-getpocket": "^1.0.0",
+    "rss": "^1.2.1"
+  }
+}
