@@ -4,6 +4,10 @@ const GetPocket = require('node-getpocket');
 const RSS = require('rss');
 
 const redirect = config.urlRoot + '/callback';
+const pocket = new GetPocket({
+  'redirect_uri': redirect,
+  'consumer_key': config.pocket.consumerKey
+});
 
 var accessToken;
 var requestToken;
@@ -16,10 +20,10 @@ app.get('/',function(req,res,next) {
       'consumer_key': config.pocket.consumerKey,
       'access_token': accessToken
     });
-    const params1 = {
+    const params = {
       'favorite': 1
     }
-    pocket.get(params1,function(err,resp) {
+    pocket.get(params,function(err,resp) {
       if (err) {
         next(err);
       } else if (resp && resp.list) {
@@ -41,20 +45,16 @@ app.get('/',function(req,res,next) {
       }
     });
   } else {
-    const params2 = {
+    const params = {
       'redirect_uri': redirect
     };
-    const pocket1 = new GetPocket({
-      'redirect_uri': redirect,
-      'consumer_key': config.pocket.consumerKey
-    });
-    pocket1.getRequestToken(params2, function(err, resp, body) {
+    pocket.getRequestToken(params, function(err, resp, body) {
       if (err) {
         next(err);
       } else {
         var json = JSON.parse(body);
         requestToken = json.code;
-        var url = pocket1.getAuthorizeURL({
+        var url = pocket.getAuthorizeURL({
           'consumer_key': config.pocket.consumerKey,
           'request_token': requestToken,
           'redirect_uri': redirect
@@ -67,14 +67,10 @@ app.get('/',function(req,res,next) {
 
 app.get('/callback',function(req,res,next) {
   if (requestToken) {
-    const params3 = {
+    const params = {
       'request_token': requestToken
     };
-    const pocket2 = new GetPocket({
-      'redirect_uri': redirect,
-      'consumer_key': config.pocket.consumerKey
-    });
-    pocket2.getAccessToken(params3, function(err, resp, body) {
+    pocket.getAccessToken(params, function(err, resp, body) {
       if (err) {
         next(err);
       } else {
