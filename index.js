@@ -34,12 +34,14 @@ app.get('/',function(req,res,next) {
         const items = [];
         for(var itemId in resp.list) {
           const item = resp.list[itemId];
-          items.push({
-            'title': item.given_title,
-            'description': item.excerpt,
-            'url': item.given_url,
-            'date': new Date(parseInt(item.time_added) * 1000)
-          });
+          if (item.given_title.indexOf('Pocket Blog') < 0) {
+            items.push({
+              'title': item.given_title,
+              'description': item.excerpt,
+              'url': item.given_url,
+              'date': new Date(parseInt(item.time_added) * 1000)
+            });
+          }
         }
         items.sort(function(a,b) {
           return b.date.getTime() - a.date.getTime();
